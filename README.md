@@ -14,3 +14,5 @@ We propose a novel yet effective knowledge distillation scheme which mimics an a
 ![Fig4](https://github.com/kbzhang0505/RPC/assets/97494153/d63d8c2a-3098-4b77-9ea8-e6275070ace0)
 
 The weights of student models are available at https://pan.baidu.com/s/1d9CkeMjBfWEU3DPPXR8Pjg?pwd=0207.
+
+# If there are any questions，please feel free to contact us.
