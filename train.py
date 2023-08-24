@@ -55,7 +55,7 @@ if __name__ == '__main__':
     parser.add_argument('--teacher-weight', type=str, default='checkpoints/cifar100_resnet110__best.pt',
                         help='teacher model weight path')
     parser.add_argument('--kd-loss-weight', type=float, default=1.0,
-                        help='review kd loss weight')
+                        help='Re&Pre kd loss weight')
     parser.add_argument('--kd-warm-up', type=float, default=20.0,
                         help='feature konwledge distillation loss weight warm up epochs')
 
@@ -241,7 +241,7 @@ if __name__ == '__main__':
                 t_features = t_features[1:-1]
                 s_features = s_features[:-1]
                 feature_kd_loss = hcl(s_features, t_features)
-                losses['review_kd_loss'] = feature_kd_loss * min(1, epoch/args.kd_warm_up) * args.kd_loss_weight
+                losses['Re&Pre_kd_loss'] = feature_kd_loss * min(1, epoch/args.kd_warm_up) * args.kd_loss_weight
                 if args.use_kl:
                     losses['kl_loss'] = kl_criterion(pred, t_pred) * args.kl_loss_weight
                 if args.use_RC:
