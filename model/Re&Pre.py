@@ -85,7 +85,7 @@ class ReviewKD(nn.Module):
         reabfs = nn.ModuleList()
 
         for idx, in_channel in enumerate(out_channels[1:]):
-            reabfs.append(ABF(in_channel, mid_channel, out_channels[idx + 1], idx < len(out_channels) - 1))
+            reabfs.append(ABF(in_channel, mid_channel, out_channels[idx + 1], idx >= len(out_channels) - 1))
         self.reabfs = reabfs
         self.to('cuda')
 
@@ -107,7 +107,7 @@ class ReviewKD(nn.Module):
         if len(results) < len(shapes):
             shapes = shapes[1:]
             out_shapes = out_shapes[1:]
-        out_features, res_features = self.reabfs[0](results[1], results[0], shapes[1], out_shapes[1])
+        out_features, res_features = self.reabfs[0](results[1], out_shape=out_shapes[1])
         result.append(out_features)
         for idx, (features, abf, shape, out_shape) in enumerate(zip(results[2:], self.reabfs[1:], shapes[2:], out_shapes[2:])):
             out_features, res_features = abf(features, res_features, shape, out_shape)
