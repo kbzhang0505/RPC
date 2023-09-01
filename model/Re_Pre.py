@@ -73,7 +73,7 @@ class ReviewKD(nn.Module):
         self.abfs = abfs[::-1]
 
         reabfs = nn.ModuleList()
-        for idx, in_channel in enumerate(out_channels[]):
+        for idx, in_channel in enumerate(out_channels):
             reabfs.append(ABF(in_channel, mid_channel, in_channels[idx], idx >0))
         self.reabfs = reabfs
         self.to('cuda')
