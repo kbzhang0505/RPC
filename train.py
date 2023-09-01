@@ -96,7 +96,7 @@ if __name__ == '__main__':
     from model.shufflenetv2 import ShuffleV2
     from model.wide_resnet_cifar import wrn
     from model.wide_resnet import WideResNet
-    from model.Re&Pre import build_review_kd, hcl
+    from model.Re_Pre import build_review_kd, hcl
 
 
     test_id = args.dataset + '_' + args.model + '_' + args.teacher + args.suffix
@@ -238,8 +238,7 @@ if __name__ == '__main__':
             if teacher is not None:
                 s_features, pred = cnn(images)
                 t_features, t_pred = teacher(images, is_feat = True, preact=True)
-                t_features = t_features[1:-1]
-                s_features = s_features[:-1]
+                t_features = t_features[1:]
                 feature_kd_loss = hcl(s_features, t_features)
                 losses['Re&Pre_kd_loss'] = feature_kd_loss * min(1, epoch/args.kd_warm_up) * args.kd_loss_weight
                 if args.use_kl:
