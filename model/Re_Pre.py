@@ -43,16 +43,7 @@ class ABF(nn.Module):
     def forward(self, x, y=None, shape=None, out_shape=None):
         n,_,h,w = x.shape
         # transform student features
-        # x = x.cuda()
         x = self.conv1(x)
-        if y != None:
-            _, c, _, _ = y.shape
-            if c != self.mid_channel:
-                self.conv = nn.Sequential(
-                    nn.Conv2d(c, self.mid_channel, kernel_size=1, bias=False),
-                    nn.BatchNorm2d(self.mid_channel),
-                ).cuda()
-                y = self.conv(y)
         if self.att_conv is not None:
             # upsample residual features
             y = F.interpolate(y, (shape,shape), mode="nearest")
@@ -74,18 +65,16 @@ class ReviewKD(nn.Module):
         self.student = student
         self.shapes = shapes
         self.out_shapes = shapes if out_shapes is None else out_shapes
-
-        abfs = nn.ModuleList()
-
         mid_channel = min(512, in_channels[-1])
+
+        abfs = nn.ModuleList()      
         for idx, in_channel in enumerate(in_channels):
             abfs.append(ABF(in_channel, mid_channel, out_channels[idx], idx < len(in_channels) - 1))
         self.abfs = abfs[::-1]
 
         reabfs = nn.ModuleList()
-
-        for idx, in_channel in enumerate(out_channels[1:]):
-            reabfs.append(ABF(in_channel, mid_channel, out_channels[idx + 1], idx >= len(out_channels) - 1))
+        for idx, in_channel in enumerate(out_channels[]):
+            reabfs.append(ABF(in_channel, mid_channel, in_channels[idx], idx >0))
         self.reabfs = reabfs
         self.to('cuda')
 
@@ -101,15 +90,14 @@ class ReviewKD(nn.Module):
             results.insert(0, out_features)
 
         result = []
-        result.append(results[0])
         shapes = self.out_shapes[::-1]
         out_shapes = self.out_shapes[::-1]
         if len(results) < len(shapes):
             shapes = shapes[1:]
             out_shapes = out_shapes[1:]
-        out_features, res_features = self.reabfs[0](results[1], out_shape=out_shapes[1])
+        out_features, res_features = self.reabfs[0](results[0], out_shape=out_shapes[0])
         result.append(out_features)
-        for idx, (features, abf, shape, out_shape) in enumerate(zip(results[2:], self.reabfs[1:], shapes[2:], out_shapes[2:])):
+        for idx, (features, abf, shape, out_shape) in enumerate(zip(results[1:], self.reabfs[1:], shapes[1:], out_shapes[1:])):
             out_features, res_features = abf(features, res_features, shape, out_shape)
             result.append(out_features)
 
