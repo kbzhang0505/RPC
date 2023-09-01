@@ -96,7 +96,7 @@ if __name__ == '__main__':
     from model.shufflenetv2 import ShuffleV2
     from model.wide_resnet_cifar import wrn
     from model.wide_resnet import WideResNet
-    from model.reviewkd import build_review_kd, hcl
+    from model.Re&Pre import build_review_kd, hcl
 
 
     test_id = args.dataset + '_' + args.model + '_' + args.teacher + args.suffix
@@ -252,7 +252,7 @@ if __name__ == '__main__':
                         targetKD[mm, labels[mm]] = target_max[mm]
                     targetKD = targetKD + pred
                     RC_loss = kl_criterion(pred, targetKD)
-                losses['RC_loss'] = RC_loss * (1 + best_acc/teacher_acc)
+                losses['RC_loss'] = RC_loss * 2
             else:
                 pred = cnn(images)
             xentropy_loss = criterion(pred, labels)
