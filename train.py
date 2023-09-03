@@ -251,7 +251,7 @@ if __name__ == '__main__':
                         targetKD[mm, labels[mm]] = target_max[mm]
                     targetKD = targetKD + pred
                     RC_loss = kl_criterion(pred, targetKD)
-                losses['RC_loss'] = RC_loss * 2
+                losses['RC_loss'] = RC_loss * （1 + best_acc/teacher_acc）
             else:
                 pred = cnn(images)
             xentropy_loss = criterion(pred, labels)
