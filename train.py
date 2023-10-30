@@ -66,6 +66,8 @@ if __name__ == '__main__':
                         help='use RC loss')
     parser.add_argument('--kl-loss-weight', type=float, default=1.0,
                         help='kl konwledge distillation loss weight')
+    parser.add_argument('--kl-RC-weight', type=float, default=0.1,
+                        help='kl konwledge distillation loss weight')
     parser.add_argument('-T', type=float, default=4.0,
                         help='knowledge distillation loss temperature')
     parser.add_argument('--ce-loss-weight', type=float, default=1.0,
@@ -250,8 +252,9 @@ if __name__ == '__main__':
                     for mm in range(batch_size):
                         targetKD[mm, labels[mm]] = target_max[mm]
                     targetKD = targetKD + pred
+                    targetKD = targetKD.detach（）
                     RC_loss = kl_criterion(pred, targetKD)
-                losses['RC_loss'] = RC_loss * （1 + best_acc/teacher_acc）
+                losses['RC_loss'] = RC_loss * （1 + best_acc/teacher_acc）* args.kl_RC_weight
             else:
                 pred = cnn(images)
             xentropy_loss = criterion(pred, labels)
