@@ -252,7 +252,7 @@ if __name__ == '__main__':
                     for mm in range(batch_size):
                         targetKD[mm, labels[mm]] = target_max[mm]
                     targetKD = targetKD + pred
-                    targetKD = targetKD.detach（）
+                    #targetKD = targetKD.detach()
                     RC_loss = kl_criterion(pred, targetKD)
                 losses['RC_loss'] = RC_loss * （1 + best_acc/teacher_acc）* args.kl_RC_weight
             else:
