@@ -6,15 +6,40 @@ We propose a novel yet effective knowledge distillation scheme which mimics an a
 ![Fig3](https://github.com/kbzhang0505/RPC/assets/97494153/b8c3019f-ee50-4ee0-9020-687832e2171a)
 # Response Correction Mechanism
 ![Fig5](https://github.com/kbzhang0505/RPC/assets/97494153/21fc38c7-4c07-484f-aab1-e49aed2c5c93)
-# Comparisons with State-of-the-Art Methods
-![table](https://github.com/kbzhang0505/RPC/assets/97494153/ef217a55-2ad5-4bf0-9c75-8d69202f0281)
-# Visualization comparisons of feature maps and correlation matrices
-![visual](https://github.com/kbzhang0505/RPC/assets/97494153/f97bdf72-026d-43c3-ba6b-b38138dfc8e9)
-# Robustness Evaluation
-![Fig4](https://github.com/kbzhang0505/RPC/assets/97494153/d63d8c2a-3098-4b77-9ea8-e6275070ace0)
+### Dataset Structure ###
+//For training, you need to build the new directory.
 
+*├─data 
+
+**└─Cifar100 
+
+*├─logs 
+### Weights ###
 The weights of student models are available at https://pan.baidu.com/s/1d9CkeMjBfWEU3DPPXR8Pjg?pwd=0207.
-
+### Citation ###
+If you find this code and data useful, please consider citing citing our paper:
+```
+@ARTICLE{10319075,
+  author={Cao, Qizhi and Zhang, Kaibing and He, Xin and Shen, Junge},
+  journal={IEEE Signal Processing Letters}, 
+  title={Be An Excellent Student: Review, Preview, and Correction}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-5},
+  doi={10.1109/LSP.2023.3333240}}
+```
 The code is based on ReviewKD-master.
-
+### Thanks ###
+```
+@INPROCEEDINGS{9578915,
+  author={Chen, Pengguang and Liu, Shu and Zhao, Hengshuang and Jia, Jiaya},
+  booktitle={2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+  title={Distilling Knowledge via Knowledge Review}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={5006-5015},
+  doi={10.1109/CVPR46437.2021.00497}}
+```
 # If there are any questions，please feel free to contact us.
